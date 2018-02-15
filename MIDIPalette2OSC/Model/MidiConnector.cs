@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace MIDIPalette2OSC.Model
 {
@@ -18,6 +19,7 @@ namespace MIDIPalette2OSC.Model
         {
             if (InputDevice.DeviceCount == 0)
             {
+                MessageBox.Show("No MIDI input devices found!");
                 throw new ArgumentOutOfRangeException("DeviceCount", "Not input MIDI Device Connected!");
             }
             inDevice = new InputDevice(0);
