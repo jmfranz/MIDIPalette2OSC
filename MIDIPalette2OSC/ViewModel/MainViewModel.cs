@@ -26,6 +26,12 @@ namespace MIDIPalette2OSC.ViewModel
         public int OscInterval { get; set; } = 200;
         public string OscPath { get; set; } = "/MIDI";
 
+        private ICommand closeCommand;
+        public ICommand CloseCommand
+        {
+            get { return closeCommand ?? (closeCommand = new RelayCommand(call => HandleClose())); }
+        }
+
         private ICommand loadCommand;
         public ICommand LoadCommand
         {
@@ -51,6 +57,11 @@ namespace MIDIPalette2OSC.ViewModel
         public MainViewModel()
         {
             MidiMappings = new Dictionary<Tuple<int, int>, MidiMapping>();
+        }
+        void HandleClose()
+        {
+            midiConnector?.Shutdown();
+            oscHandler?.Shutdown();
         }
 
         private void LoadFile()

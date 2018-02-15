@@ -29,6 +29,12 @@ namespace MIDIPalette2OSC.Model
             inDevice.Close();
         }
 
+        public void Shutdown()
+        {
+            inDevice.Close();
+            inDevice.Dispose();
+        }
+
         public void StartReceiving()
         {
             inDevice.StartRecording();

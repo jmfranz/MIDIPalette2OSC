@@ -26,14 +26,21 @@ namespace MIDIPalette2OSC.Model
          
         }
 
+        public void Shutdown()
+        {
+            sender.Close();
+            sender.Dispose();
+        }
+
         public void Send(string path, List<MidiMapping> data)
         {
-            var msg = "";
+            var msg = new List<string>(data.Count);
             foreach (var midiMapping in data)
             {
-                msg += midiMapping.ToString() + ";";
+                msg.Add(midiMapping.ToString());
             }
-            sender.Send(new OscMessage(path, msg.Substring(0,msg.Length-1)));
+            //sender.Send(new OscMessage(path, msg.Substring(0,msg.Length-1)));
+            sender.Send(new OscMessage(path, msg.ToArray()));
         }
 
     }
