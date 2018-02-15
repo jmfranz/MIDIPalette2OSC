@@ -19,6 +19,11 @@
             <ColumnDefinition Width="*"></ColumnDefinition>
             <ColumnDefinition Width="*"></ColumnDefinition>
         </Grid.ColumnDefinitions>
+
+        <StackPanel Grid.Column="0">
+            <TextBlock Margin="1" Text="{Binding MidiStatus}"></TextBlock>
+            <TextBlock Margin="1" Text="{Binding OscStatus}"></TextBlock>
+        </StackPanel>
         
         <StackPanel  Grid.Column="0" VerticalAlignment="Bottom">
 

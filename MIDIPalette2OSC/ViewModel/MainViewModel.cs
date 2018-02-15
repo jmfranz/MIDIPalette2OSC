@@ -22,9 +22,13 @@ namespace MIDIPalette2OSC.ViewModel
         //TODO: Change to C# 7.x and use named tuples
         //TODO: Implement multithread semaphores
         public Dictionary<Tuple<int , int>, MidiMapping> MidiMappings { get; private set; }
+        public string MidiStatus { get; set; } = "MIDI: Stopped";
+        public string OscStatus { get; set; } = "OSC: Stopped";
         public string OscAddr { get; set; } = "127.0.0.1:5005";
         public int OscInterval { get; set; } = 200;
         public string OscPath { get; set; } = "/MIDI";
+        
+        
 
         private ICommand closeCommand;
         public ICommand CloseCommand
@@ -79,8 +83,8 @@ namespace MIDIPalette2OSC.ViewModel
                 
             midiConnector.MessageReadyEvent
                 += (channel, cc, value) => { MidiMappings[new Tuple<int, int>(channel, cc)].Amout = value; };
-            
-            // OnPropertyChanged("MidiMappings[0]"); };
+            MidiStatus = "MIDI: Listening";
+            OnPropertyChanged(nameof(MidiStatus));
         }
 
         private void StartOsc()
@@ -91,6 +95,9 @@ namespace MIDIPalette2OSC.ViewModel
             oscTimer.Elapsed +=
                 (sender, args) => oscHandler.Send(OscPath, MidiMappings.Select(entries => entries.Value).ToList());
             oscTimer.Start();
+
+            OscStatus = "OSC: Transmiting";
+            OnPropertyChanged(nameof(OscStatus));
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
