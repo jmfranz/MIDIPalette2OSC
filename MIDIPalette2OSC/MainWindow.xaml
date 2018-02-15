@@ -1,0 +1,53 @@
+﻿<Window x:Class="MIDIPalette2OSC.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:MIDIPalette2OSC"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="350" Width="525">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        
+        <StackPanel  Grid.Column="0" VerticalAlignment="Bottom">
+
+            <TextBlock Margin="1" Text="OSC Sv Addr (addr:port): "></TextBlock>
+            <TextBox Margin="1" Text="{Binding OscAddr, Mode=TwoWay}" ></TextBox>
+            <TextBlock Margin="1" Text="OSC Path: "></TextBlock>
+            <TextBox Margin="1" Text="{Binding OscPath, Mode=TwoWay}"></TextBox>
+            <TextBlock Margin="1" Text="OSC Interval (ms): "></TextBlock>
+            <TextBox Margin="1" Text="{Binding OscInterval, Mode=TwoWay}"></TextBox>
+
+            <Button Margin="3" Content="Load Palette File" Command ="{Binding LoadCommand}"></Button>
+            <Button Margin="3" Content="Listen to MIDI" Command="{Binding StartMidiCommand}"></Button>
+            <Button Margin="3" Content="Start OSC" Command="{Binding StartOscCommand}"></Button>
+        </StackPanel>
+
+        <ListView Grid.Column="1" ItemsSource="{Binding MidiMappings}">
+            <ListView.View>
+                <GridView AllowsColumnReorder="true"
+                          ColumnHeaderToolTip="MIDI Mappings">
+                    <GridViewColumn DisplayMemberBinding=
+                                    "{Binding Path=Value.DeviceName}"
+                                    Header="Pallete Name" />
+                    <GridViewColumn DisplayMemberBinding=
+                                    "{Binding Path=Value.ContinuousControlNumber}"
+                                    Header="CC Number" />
+                    <GridViewColumn DisplayMemberBinding=
+                                    "{Binding Path=Value.Note}"
+                                    Header="Note"/>
+                    <!--<GridViewColumn DisplayMemberBinding=
+                                    "{Binding Path=Value.Amout}"
+                                    Header="Amout"/>-->
+                </GridView>
+                </ListView.View>
+        </ListView>
+
+    </Grid>
+</Window>
+
+
+<!--ItemsSource="{Binding Source=MidiMappings }"-->
